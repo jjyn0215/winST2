@@ -1,32 +1,26 @@
-﻿using System;
-using System.Linq;
+﻿using Newtonsoft.Json.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Runtime.CompilerServices;
 using System.Text;
-using System.Windows.Navigation;
-using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json.Linq;
-using Windows.ApplicationModel.UserDataTasks;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Demo.Mvvm.Models;
 using Wpf.Ui.Demo.Mvvm.ViewModels;
 
 
 namespace Wpf.Ui.Demo.Mvvm.Comms;
-public partial class GetDevicesFromCloud : ObservableObject
+internal partial class GetDevicesFromCloud : ObservableObject
  {
 
     private static SettingsViewModel settingsViewModel = (SettingsViewModel)App.Services.GetService(typeof(SettingsViewModel));
     private static DashboardViewModel dashboardViewModel = (DashboardViewModel)App.Services.GetService(typeof(DashboardViewModel));
 
 
-    public static readonly HttpClient client = new HttpClient
+    internal static readonly HttpClient client = new HttpClient
     {
         BaseAddress = new Uri("https://api.smartthings.com/v1"),
     };
 
-    public static void OpenSnackBar(string title, string message, ControlAppearance controlAppearance)
+    internal static void OpenSnackBar(string title, string message, ControlAppearance controlAppearance)
     {
         var snackbarService = (ISnackbarService)App.Services.GetService(typeof(ISnackbarService));
 
@@ -39,7 +33,7 @@ public partial class GetDevicesFromCloud : ObservableObject
         );
     }
 
-    public static async Task<bool?> RequestData()
+    internal static async Task<bool?> RequestData()
     {
         try 
         {
@@ -104,7 +98,7 @@ public partial class GetDevicesFromCloud : ObservableObject
         });
     }
 
-    public static async Task UpdateDevices()
+    internal static async Task UpdateDevices()
     {
         foreach (var device in dashboardViewModel.Devices)
         {
@@ -127,21 +121,21 @@ public partial class GetDevicesFromCloud : ObservableObject
     }
 
 
-    public static async Task<string> GetSwitchStatusAsync(string deviceId)
+    internal static async Task<string> GetSwitchStatusAsync(string deviceId)
     {
         var statusResponse = await FetchDataAsync($"/devices/{deviceId}/status");
         var switchStatus = statusResponse["components"]?["main"]?["switch"]?["switch"]?["value"]?.ToString();
         return switchStatus ?? "Unknown";
     }
 
-    public static async Task<string> GetOnlineStatusAsync(string deviceId)
+    internal static async Task<string> GetOnlineStatusAsync(string deviceId)
     {
         var healthResponse = await FetchDataAsync($"/devices/{deviceId}/health");
         var onlineStatus = healthResponse["state"]?.ToString();
         return onlineStatus ?? "Unknown";
     }
 
-    public static async Task<bool> SendCommandAsync(string deviceId, string command)
+    internal static async Task<bool> SendCommandAsync(string deviceId, string command)
     {
         try
         {

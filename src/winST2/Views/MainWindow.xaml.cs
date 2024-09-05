@@ -3,11 +3,8 @@
 // Copyright (C) Leszek Pomianowski and WPF UI Contributors.
 // All Rights Reserved.
 
-using Windows.Devices.Enumeration;
 using Wpf.Ui.Abstractions;
 using Wpf.Ui.Controls;
-using Wpf.Ui.Demo.Mvvm.Services;
-using Wpf.Ui.Demo.Mvvm.Views.Pages;
 using Wpf.Ui.Tray.Controls;
 
 namespace Wpf.Ui.Demo.Mvvm.Views;

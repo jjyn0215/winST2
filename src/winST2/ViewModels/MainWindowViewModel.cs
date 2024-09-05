@@ -5,7 +5,6 @@
 
 using System.Collections.ObjectModel;
 using Wpf.Ui.Controls;
-using Wpf.Ui.Demo.Mvvm.Helpers;
 
 namespace Wpf.Ui.Demo.Mvvm.ViewModels;
 
