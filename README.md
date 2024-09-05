@@ -8,6 +8,7 @@ Here's my previous winST : https://github.com/jjyn0215/winST.git
 
 ## Functions
 - Basic device on/off
+- Polling rate is 5 sec
 - Works on background
 - Shortcut control ( Sooon )
   
