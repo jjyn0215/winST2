@@ -8,6 +8,7 @@ Here's my previous winST : https://github.com/jjyn0215/winST.git
 
 ## Functions
 - Basic device on/off
+- Works on background
 - Shortcut control ( Sooon )
   
 ## How to use
