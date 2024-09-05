@@ -63,9 +63,15 @@ public partial class MainWindow : INavigationWindow
     {
         if (WindowState == WindowState.Minimized)
         {
-            Hide(); // Ã¢ ¼û±â±â
+            Hide(); 
         }
         base.OnStateChanged(e);
+    }
+
+    private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+    {
+        e.Cancel = true; 
+        Hide(); 
     }
 
     INavigationView INavigationWindow.GetNavigation()
@@ -92,6 +98,6 @@ public partial class MainWindow : INavigationWindow
 
     private void MenuItem_Click_Exit(object sender, RoutedEventArgs e)
     {
-        CloseWindow();
+        OnClosed(e);
     }
 }

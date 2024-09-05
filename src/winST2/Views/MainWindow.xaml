@@ -22,7 +22,7 @@
     WindowCornerPreference="Round"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d"
-        >
+    Closing="Window_Closing">
 
     <ui:FluentWindow.InputBindings>
         <KeyBinding
