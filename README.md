@@ -16,6 +16,9 @@ Here's my previous winST : https://github.com/jjyn0215/winST.git
 
 ## Todo
 Shortcut
+
 Device Icon
+
 Device Property (sensor, others...)
+
 Tray UI
