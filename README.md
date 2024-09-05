@@ -1,4 +1,4 @@
-# winST
+# winST2
 A simple windows application for SmartThings
 
 ## Why did you make this?
