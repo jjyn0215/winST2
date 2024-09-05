@@ -66,9 +66,6 @@ public partial class MainWindowViewModel : ViewModel
             },
         ];
 
- 
-        TrayMenuItems = [new() { Header = "shit", Tag = "tray_home" }];
-
         _isInitialized = true;
     }
 }

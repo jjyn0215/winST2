@@ -68,12 +68,6 @@ public partial class MainWindow : INavigationWindow
         base.OnStateChanged(e);
     }
 
-    private void NotifyIcon_LeftDoubleClick(NotifyIcon sender, RoutedEventArgs e)
-    {
-        ShowWindow();
-        WindowState = WindowState.Normal;
-    }
-
     INavigationView INavigationWindow.GetNavigation()
     {
         throw new NotImplementedException();
@@ -84,5 +78,20 @@ public partial class MainWindow : INavigationWindow
         throw new NotImplementedException();
     }
 
+    private void NotifyIcon_LeftDoubleClick(NotifyIcon sender, RoutedEventArgs e)
+    {
+        ShowWindow();
+        WindowState = WindowState.Normal;
+    }
 
+    private void MenuItem_Click_Open(object sender, RoutedEventArgs e)
+    {
+        ShowWindow();
+        WindowState = WindowState.Normal;
+    }
+
+    private void MenuItem_Click_Exit(object sender, RoutedEventArgs e)
+    {
+        CloseWindow();
+    }
 }

@@ -37,7 +37,6 @@ public partial class DashboardViewModel(IDeviceUpdateService deviceUpdateService
     public override void OnNavigatedFrom()
     {
         deviceUpdateService.StopUpdating();
-        IsInitialized = false;
     }
 
     [RelayCommand]
