@@ -53,6 +53,13 @@ public partial class MainWindowViewModel : ViewModel
                 TargetPageType = typeof(Views.Pages.DashboardPage)
             },
 
+            new NavigationViewItem()
+            {
+                Content = "CommandLog",
+                Icon = new SymbolIcon { Symbol = SymbolRegular.DocumentData24 },
+                TargetPageType = typeof(Views.Pages.CommandLogPage)
+            },
+
         ];
 
         NavigationFooter =

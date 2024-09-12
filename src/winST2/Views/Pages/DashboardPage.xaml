@@ -20,7 +20,7 @@
     <Page.Resources>
         <CollectionViewSource
             x:Key="GroupedDevices"
-            Source="{Binding ViewModel.Devices}">
+            Source="{Binding }">
             <CollectionViewSource.GroupDescriptions>
                 <PropertyGroupDescription
                     PropertyName="RoomName" />
@@ -28,8 +28,10 @@
         </CollectionViewSource>
     </Page.Resources>
 
+
     <Grid
         Margin="0,30,0,0">
+
         <StackPanel>
             <ui:Button
                 Grid.Column="0"
@@ -67,7 +69,8 @@
                             Width="200"
                             Height="100"
                             Icon="{ui:SymbolIcon FlashSettings24}"
-                            IsEnabled="{Binding IsOnline}">
+                            IsEnabled="{Binding IsOnline}"
+                            x:Name="DeviceCard">
                             <ui:CardControl.Header>
                                 <StackPanel>
                                     <ui:TextBlock
@@ -82,7 +85,7 @@
                                     <ui:TextBlock
                                         Appearance="Secondary"
                                         Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                        Text="{Binding Type}"
+                                        Text="{Binding Location}"
                                         MaxWidth="100"
                                         HorizontalAlignment="Left"
                                         TextWrapping="NoWrap">

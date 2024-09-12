@@ -61,6 +61,8 @@ public partial class App
                 _ = services.AddSingleton<ViewModels.DashboardViewModel>();
                 _ = services.AddSingleton<Views.Pages.SettingsPage>();
                 _ = services.AddSingleton<ViewModels.SettingsViewModel>();
+                _ = services.AddSingleton<Views.Pages.CommandLogPage>();
+                _ = services.AddSingleton<ViewModels.CommandLogViewModel>();
 
                 // Configuration
                 _ = services.Configure<AppConfig>(context.Configuration.GetSection(nameof(AppConfig)));

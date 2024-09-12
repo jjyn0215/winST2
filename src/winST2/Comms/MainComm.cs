@@ -39,7 +39,7 @@ internal partial class GetDevicesFromCloud : ObservableObject
         {
             OpenSnackBar("Now loading...", "If this take too long, check your internet connection.", ControlAppearance.Info);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", settingsViewModel.ApiToken);
-            dashboardViewModel.Devices.Clear();
+            //dashboardViewModel.Devices.Clear();
             var locations = await FetchDataAsync("/locations");
             if (locations["items"] == null || !locations["items"].Any())
             {
@@ -85,22 +85,24 @@ internal partial class GetDevicesFromCloud : ObservableObject
         await Application.Current.Dispatcher.InvokeAsync(async () =>
         {
             string status = await GetSwitchStatusAsync(device["deviceId"]?.ToString());
-            dashboardViewModel.Devices.Add(new Device
+            Location._devices
+            Location.Devices.Add(new Device
             {
                 Name = device["label"]?.ToString() ?? "Unnamed",
                 RoomName = room["name"]?.ToString(),
                 Type = device["name"]?.ToString() ?? "Unknown",
                 Status = status == "on" ? "True" : "False",
                 IsOnline = await GetOnlineStatusAsync(device["deviceId"]?.ToString()) == "ONLINE" ? "True" : "False",
-                IsSwitchCapable = status == "on" || status == "off" ? "Visible" : "Hidden",
+                IsSwitchCapable = status == "on" || status == "off" ? "Visible" : "Collapsed",
                 Key = device["deviceId"]?.ToString(),
             });
+            
         });
     }
 
     internal static async Task UpdateDevices()
     {
-        foreach (var device in dashboardViewModel.Devices)
+        foreach (var device in Location.Devices)
         {
             device.Status = await GetSwitchStatusAsync(device.Key) == "on" ? "True" : "False";
         }
