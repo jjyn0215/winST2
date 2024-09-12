@@ -85,8 +85,7 @@ internal partial class GetDevicesFromCloud : ObservableObject
         await Application.Current.Dispatcher.InvokeAsync(async () =>
         {
             string status = await GetSwitchStatusAsync(device["deviceId"]?.ToString());
-            Location._devices
-            Location.Devices.Add(new Device
+            dashboardViewModel.Devices.Add(new Device
             {
                 Name = device["label"]?.ToString() ?? "Unnamed",
                 RoomName = room["name"]?.ToString(),
@@ -102,7 +101,7 @@ internal partial class GetDevicesFromCloud : ObservableObject
 
     internal static async Task UpdateDevices()
     {
-        foreach (var device in Location.Devices)
+        foreach (var device in dashboardViewModel.Devices)
         {
             device.Status = await GetSwitchStatusAsync(device.Key) == "on" ? "True" : "False";
         }

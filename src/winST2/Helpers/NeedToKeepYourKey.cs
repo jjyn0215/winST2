@@ -25,7 +25,6 @@ internal class NeedToKeepYourKey
         }
     }
 
-    // API 키 쓰기
     internal static void UpdateApiKey(string newApiKey)
     {
         try

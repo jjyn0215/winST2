@@ -21,7 +21,7 @@ public partial class DashboardViewModel(IDeviceUpdateService deviceUpdateService
     private string _isVisible = string.Empty;
 
     [ObservableProperty]
-    private ObservableCollection<Location> _locations = [];
+    private ObservableCollection<Device> _devices = [];
 
     [ObservableProperty]
     private string _status;

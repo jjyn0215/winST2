@@ -12,7 +12,7 @@ namespace Wpf.Ui.Demo.Mvvm.Services;
 /// </summary>
 public class ApplicationHostService(IServiceProvider serviceProvider) : IHostedService
 {
-    private INavigationWindow? _navigationWindow;
+    private INavigationWindow  _navigationWindow;
 
     /// <summary>
     /// Triggered when the application host is ready to start the service.

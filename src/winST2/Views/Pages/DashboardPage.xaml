@@ -20,7 +20,7 @@
     <Page.Resources>
         <CollectionViewSource
             x:Key="GroupedDevices"
-            Source="{Binding }">
+            Source="{Binding ViewModel.Devices}">
             <CollectionViewSource.GroupDescriptions>
                 <PropertyGroupDescription
                     PropertyName="RoomName" />
