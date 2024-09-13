@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using System.Collections.ObjectModel;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -39,19 +40,20 @@ internal partial class GetDevicesFromCloud : ObservableObject
         {
             OpenSnackBar("Now loading...", "If this take too long, check your internet connection.", ControlAppearance.Info);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", settingsViewModel.ApiToken);
-            //dashboardViewModel.Devices.Clear();
+            dashboardViewModel.Devices.Clear();
             var locations = await FetchDataAsync("/locations");
             if (locations["items"] == null || !locations["items"].Any())
             {
                 return false;
             }
+            var devices = await FetchDataAsync($"/devices");
+
             foreach (var location in locations["items"])
             {
                 string locationId = location["locationId"].ToString();
                 var rooms = await FetchDataAsync($"/locations/{locationId}/rooms");
-                var devices = await FetchDataAsync("/devices");
 
-                await RequestDevices(rooms, devices);
+                await CreateDevices(rooms, devices, location);
             }
             OpenSnackBar("Loaded Successfully.", "Devices are ready!", ControlAppearance.Success);
             return true;
@@ -63,8 +65,12 @@ internal partial class GetDevicesFromCloud : ObservableObject
         }
     }
 
-    private static async Task RequestDevices(JObject rooms, JObject devices)
+    private static async Task CreateDevices(JObject rooms, JObject devices, JToken location)
     {
+        //var locationModel = new Location
+        //{
+        //    Name = location["name"].ToString(),
+        //};
         if (rooms["items"] == null)
         {
             return;
@@ -74,29 +80,27 @@ internal partial class GetDevicesFromCloud : ObservableObject
             var devicesInRoom = devices["items"].Where(d => d["roomId"]?.ToString() == room["roomId"]?.ToString());
             foreach (var device in devicesInRoom)
             {
-                await CreateDevices(device, room);
+                    {
+                        await Application.Current.Dispatcher.InvokeAsync(async () =>
+                        {
+                            string status = await GetSwitchStatusAsync(device["deviceId"]?.ToString());
+
+                            dashboardViewModel.Devices.Add(new Device
+                            {
+                                Name = device["label"]?.ToString() ?? "Unnamed",
+                                RoomName = room["name"]?.ToString(),
+                                Type = device["locationId"].ToString() ?? "Unknown",
+                                Status = status == "on" ? "True" : "False",
+                                IsOnline = await GetOnlineStatusAsync(device["deviceId"]?.ToString()) == "ONLINE" ? "True" : "False",
+                                IsSwitchCapable = status == "on" || status == "off" ? "Visible" : "Collapsed",
+                                Key = device["deviceId"]?.ToString(),
+                            });
+                        });
+                    }
+                //await CreateDevices(device, room);
             }
         }
-
-    }
-
-    private static async Task CreateDevices(JToken device, JToken room)
-    {
-        await Application.Current.Dispatcher.InvokeAsync(async () =>
-        {
-            string status = await GetSwitchStatusAsync(device["deviceId"]?.ToString());
-            dashboardViewModel.Devices.Add(new Device
-            {
-                Name = device["label"]?.ToString() ?? "Unnamed",
-                RoomName = room["name"]?.ToString(),
-                Type = device["name"]?.ToString() ?? "Unknown",
-                Status = status == "on" ? "True" : "False",
-                IsOnline = await GetOnlineStatusAsync(device["deviceId"]?.ToString()) == "ONLINE" ? "True" : "False",
-                IsSwitchCapable = status == "on" || status == "off" ? "Visible" : "Collapsed",
-                Key = device["deviceId"]?.ToString(),
-            });
-            
-        });
+        //dashboardViewModel.Locations.Add(locationModel);
     }
 
     internal static async Task UpdateDevices()

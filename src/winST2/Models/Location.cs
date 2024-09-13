@@ -11,7 +11,7 @@ namespace Wpf.Ui.Demo.Mvvm.Models
     {
         public string Name { get; set; }
 
-        [ObservableProperty]
-        public static ObservableCollection<Device> _devices = [];
+        //[ObservableProperty]
+        //public static ObservableCollection<Device> _devices = [];
     }
 }

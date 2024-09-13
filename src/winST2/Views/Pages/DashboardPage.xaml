@@ -27,11 +27,9 @@
             </CollectionViewSource.GroupDescriptions>
         </CollectionViewSource>
     </Page.Resources>
-
-
+    
     <Grid
         Margin="0,30,0,0">
-
         <StackPanel>
             <ui:Button
                 Grid.Column="0"
@@ -41,11 +39,26 @@
                 Margin="0,0,33.5,0"
                 Appearance="Primary"
                 Command="{Binding ViewModel.SyncPressedCommand}" />
+            <!--<TabControl
+                Grid.Column="1"
+                ItemsSource="{Binding ViewModel.Locations}">
+                <TabControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock
+                            Text="{Binding Name}" />
+                    </DataTemplate>
+                </TabControl.ItemTemplate>
+                <TabControl.ContentTemplate>
+                    <DataTemplate>
+
+                    </DataTemplate>
+                </TabControl.ContentTemplate>
+            </TabControl>-->
             <ui:VirtualizingItemsControl
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
                 Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                ItemsSource="{Binding Source={StaticResource GroupedDevices}, Mode=OneWay}">
+                ItemsSource="{Binding Source={StaticResource GroupedDevices}}">
                 <ui:VirtualizingItemsControl.GroupStyle>
                     <GroupStyle>
                         <GroupStyle.HeaderTemplate>
@@ -85,7 +98,7 @@
                                     <ui:TextBlock
                                         Appearance="Secondary"
                                         Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                        Text="{Binding Location}"
+                                        Text="{Binding Type}"
                                         MaxWidth="100"
                                         HorizontalAlignment="Left"
                                         TextWrapping="NoWrap">
