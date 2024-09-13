@@ -84,7 +84,7 @@ public partial class MainWindow : INavigationWindow
     private void NotifyIcon_LeftDoubleClick(NotifyIcon sender, RoutedEventArgs e)
     {
         ShowWindow();
-        WindowState = WindowState.Normal;
+        WindowState = WindowState.Maximized;
     }
 
     private void MenuItem_Click_Open(object sender, RoutedEventArgs e)
