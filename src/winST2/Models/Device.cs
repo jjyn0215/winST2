@@ -7,6 +7,8 @@ public partial class Device : ObservableObject
 
     public string RoomName {  get; set; }
 
+    public string LocationName { get; set; }
+
     [ObservableProperty]
     public string _status;
 

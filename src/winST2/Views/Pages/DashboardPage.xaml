@@ -18,10 +18,12 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <CollectionViewSource
-            x:Key="GroupedDevices"
+        <CollectionViewSource 
+            x:Key="GroupedByRooms"
             Source="{Binding ViewModel.Devices}">
             <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription
+                    PropertyName="LocationName" />
                 <PropertyGroupDescription
                     PropertyName="RoomName" />
             </CollectionViewSource.GroupDescriptions>
@@ -58,9 +60,22 @@
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
                 Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                ItemsSource="{Binding Source={StaticResource GroupedDevices}}">
+                ItemsSource="{Binding Source={StaticResource GroupedByRooms}}">
                 <ui:VirtualizingItemsControl.GroupStyle>
-                    <GroupStyle>
+                    <GroupStyle HidesIfEmpty="True">
+                        <GroupStyle.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    Text="{Binding Name}"
+                                    FontSize="35"
+                                    FontWeight="Bold"
+                                    Margin="40,40,0,20"
+                                    Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
+                            </DataTemplate>
+                        </GroupStyle.HeaderTemplate>
+                    </GroupStyle>
+                    <GroupStyle
+                        HidesIfEmpty="True">
                         <GroupStyle.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock

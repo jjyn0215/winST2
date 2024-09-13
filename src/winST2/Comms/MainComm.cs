@@ -89,6 +89,7 @@ internal partial class GetDevicesFromCloud : ObservableObject
                             {
                                 Name = device["label"]?.ToString() ?? "Unnamed",
                                 RoomName = room["name"]?.ToString(),
+                                LocationName = location["name"]?.ToString(),
                                 Type = device["locationId"].ToString() ?? "Unknown",
                                 Status = status == "on" ? "True" : "False",
                                 IsOnline = await GetOnlineStatusAsync(device["deviceId"]?.ToString()) == "ONLINE" ? "True" : "False",
