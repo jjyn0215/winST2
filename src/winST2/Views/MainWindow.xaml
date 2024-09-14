@@ -24,12 +24,18 @@
     mc:Ignorable="d"
     Closing="Window_Closing">
 
+<<<<<<< HEAD
+=======
+    
+>>>>>>> feb826919b19a0cad3383548ba71fd015dc547be
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition
+                Height="Auto" />
+            <RowDefinition
+                Height="*" />
         </Grid.RowDefinitions>
-
+        
         <ui:NavigationView
             x:Name="RootNavigation"
             Grid.Row="1"
@@ -37,14 +43,20 @@
             OpenPaneLength="200"
             BreadcrumbBar="{Binding ElementName=Whatisthis}"
             FooterMenuItemsSource="{Binding ViewModel.NavigationFooter, Mode=OneWay}"
+<<<<<<< HEAD
             MenuItemsSource="{Binding ViewModel.NavigationItems, Mode=OneWay}">
+=======
+            MenuItemsSource="{Binding ViewModel.NavigationItems, Mode=OneWay}"
+            Transition="FadeInWithSlide"
+            PaneDisplayMode="Left">
+>>>>>>> feb826919b19a0cad3383548ba71fd015dc547be
             <ui:NavigationView.Header>
                 <ui:BreadcrumbBar
-                    x:Name="Whatisthis"
-                    Visibility="Visible"
-                    Margin="42,32,0,0"
-                    FontSize="28"
-                    FontWeight="DemiBold" />
+                        x:Name="Whatisthis"
+                        Visibility="Visible"
+                        Margin="42,32,0,0"
+                        FontSize="28"
+                        FontWeight="DemiBold" />
             </ui:NavigationView.Header>
             <ui:NavigationView.ContentOverlay>
                 <Grid>
@@ -55,8 +67,10 @@
         </ui:NavigationView>
         
         <ui:TitleBar
+            x:Name="TitleBar"
             Title="{Binding ViewModel.ApplicationTitle, Mode=OneWay}"
-            Grid.Row="0">
+            Grid.Row="0"
+            >
             <ui:TitleBar.Icon>
                 <ui:ImageIcon Source="pack://application:,,,/Assets/ST2-256.png" />
             </ui:TitleBar.Icon>
