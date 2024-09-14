@@ -24,10 +24,6 @@
     mc:Ignorable="d"
     Closing="Window_Closing">
 
-<<<<<<< HEAD
-=======
-    
->>>>>>> feb826919b19a0cad3383548ba71fd015dc547be
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition
@@ -43,13 +39,11 @@
             OpenPaneLength="200"
             BreadcrumbBar="{Binding ElementName=Whatisthis}"
             FooterMenuItemsSource="{Binding ViewModel.NavigationFooter, Mode=OneWay}"
-<<<<<<< HEAD
-            MenuItemsSource="{Binding ViewModel.NavigationItems, Mode=OneWay}">
-=======
+
             MenuItemsSource="{Binding ViewModel.NavigationItems, Mode=OneWay}"
             Transition="FadeInWithSlide"
             PaneDisplayMode="Left">
->>>>>>> feb826919b19a0cad3383548ba71fd015dc547be
+
             <ui:NavigationView.Header>
                 <ui:BreadcrumbBar
                         x:Name="Whatisthis"
