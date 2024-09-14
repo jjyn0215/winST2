@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json.Linq;
-using System.Collections.ObjectModel;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -83,14 +82,14 @@ internal partial class GetDevicesFromCloud : ObservableObject
                     {
                         await Application.Current.Dispatcher.InvokeAsync(async () =>
                         {
-                            string status = await GetSwitchStatusAsync(device["deviceId"]?.ToString());
+                            string status = await GetStatusAsync(device["deviceId"]?.ToString());
 
                             dashboardViewModel.Devices.Add(new Device
                             {
                                 Name = device["label"]?.ToString() ?? "Unnamed",
                                 RoomName = room["name"]?.ToString(),
                                 LocationName = location["name"]?.ToString(),
-                                Type = device["locationId"].ToString() ?? "Unknown",
+                                Type = status ?? "Unknown",
                                 Status = status == "on" ? "True" : "False",
                                 IsOnline = await GetOnlineStatusAsync(device["deviceId"]?.ToString()) == "ONLINE" ? "True" : "False",
                                 IsSwitchCapable = status == "on" || status == "off" ? "Visible" : "Collapsed",
@@ -108,7 +107,7 @@ internal partial class GetDevicesFromCloud : ObservableObject
     {
         foreach (var device in dashboardViewModel.Devices)
         {
-            device.Status = await GetSwitchStatusAsync(device.Key) == "on" ? "True" : "False";
+            device.Status = await GetStatusAsync(device.Key) == "on" ? "True" : "False";
         }
     }
 
@@ -127,10 +126,18 @@ internal partial class GetDevicesFromCloud : ObservableObject
     }
 
 
-    internal static async Task<string> GetSwitchStatusAsync(string deviceId)
+    internal static async Task<string> GetStatusAsync(string deviceId)
     {
         var statusResponse = await FetchDataAsync($"/devices/{deviceId}/status");
         var switchStatus = statusResponse["components"]?["main"]?["switch"]?["switch"]?["value"]?.ToString();
+        if (switchStatus == null)
+        {
+            var mainComponent = statusResponse["components"]?["main"];
+            foreach (var property in mainComponent?.Children<JProperty>())
+            {
+                return property.Value["value"]?.ToString() ?? "Unknown";
+            }
+        }
         return switchStatus ?? "Unknown";
     }
 

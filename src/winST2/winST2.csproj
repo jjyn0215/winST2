@@ -6,7 +6,7 @@
     <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
     <UseWPF>true</UseWPF>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <ApplicationIcon>applicationIcon.ico</ApplicationIcon>
+    <ApplicationIcon>ST2.ico</ApplicationIcon>
     <Platforms>AnyCPU;x64</Platforms>
     <NoWarn>$(NoWarn);SA1601</NoWarn>
 	<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
@@ -22,17 +22,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Assets\applicationIcon-1024.png" />
-    <None Remove="Assets\applicationIcon-256.png" />
-    <None Remove="Assets\ST2.png" />
+    <None Remove="Assets\ST2-1024.png" />
+    <None Remove="Assets\ST2-256.png" />
   </ItemGroup>
 
-
+  <ItemGroup>
+    <Content Include="ST2.ico" />
+  </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Assets\applicationIcon-1024.png" />
-    <Resource Include="Assets\applicationIcon-256.png" />
-    <Resource Include="Assets\ST2.png" />
+    <Resource Include="Assets\ST2-1024.png" />
+    <Resource Include="Assets\ST2-256.png" />
   </ItemGroup>
 
 </Project>

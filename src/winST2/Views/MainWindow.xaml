@@ -24,13 +24,6 @@
     mc:Ignorable="d"
     Closing="Window_Closing">
 
-    <ui:FluentWindow.InputBindings>
-        <KeyBinding
-            Key="F"
-            Command="{Binding ElementName=AutoSuggestBox, Path=FocusCommand}"
-            Modifiers="Control" />
-    </ui:FluentWindow.InputBindings>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -41,20 +34,10 @@
             x:Name="RootNavigation"
             Grid.Row="1"
             IsBackButtonVisible="Collapsed"
-            
             OpenPaneLength="200"
             BreadcrumbBar="{Binding ElementName=Whatisthis}"
             FooterMenuItemsSource="{Binding ViewModel.NavigationFooter, Mode=OneWay}"
             MenuItemsSource="{Binding ViewModel.NavigationItems, Mode=OneWay}">
-            <ui:NavigationView.AutoSuggestBox>
-                <ui:AutoSuggestBox x:Name="AutoSuggestBox" PlaceholderText="Search">
-                    <ui:AutoSuggestBox.Icon>
-                        <ui:IconSourceElement>
-                            <ui:SymbolIconSource Symbol="Search24" />
-                        </ui:IconSourceElement>
-                    </ui:AutoSuggestBox.Icon>
-                </ui:AutoSuggestBox>
-            </ui:NavigationView.AutoSuggestBox>
             <ui:NavigationView.Header>
                 <ui:BreadcrumbBar
                     x:Name="Whatisthis"
@@ -75,14 +58,14 @@
             Title="{Binding ViewModel.ApplicationTitle, Mode=OneWay}"
             Grid.Row="0">
             <ui:TitleBar.Icon>
-                <ui:ImageIcon Source="pack://application:,,,/Assets/ST2.png" />
+                <ui:ImageIcon Source="pack://application:,,,/Assets/ST2-256.png" />
             </ui:TitleBar.Icon>
         </ui:TitleBar>
 
         <tray:NotifyIcon
             Grid.Row="0"
             FocusOnLeftClick="False"
-            Icon="pack://application:,,,/Assets/ST2.png"
+            Icon="pack://application:,,,/Assets/ST2-256.png"
             MenuOnRightClick="True"
             LeftDoubleClick="NotifyIcon_LeftDoubleClick"
             TooltipText="Ruuning, double click to open"
