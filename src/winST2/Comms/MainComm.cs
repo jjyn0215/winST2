@@ -83,7 +83,6 @@ internal partial class GetDevicesFromCloud : ObservableObject
                         await Application.Current.Dispatcher.InvokeAsync(async () =>
                         {
                             string status = await GetStatusAsync(device["deviceId"]?.ToString());
-
                             dashboardViewModel.Devices.Add(new Device
                             {
                                 Name = device["label"]?.ToString() ?? "Unnamed",
@@ -129,13 +128,13 @@ internal partial class GetDevicesFromCloud : ObservableObject
     internal static async Task<string> GetStatusAsync(string deviceId)
     {
         var statusResponse = await FetchDataAsync($"/devices/{deviceId}/status");
-        var switchStatus = statusResponse["components"]?["main"]?["switch"]?["switch"]?["value"]?.ToString();
+        var switchStatus = statusResponse["components"]?["main"]?["switch"]?["switch"]?["value"]?.ToString() ?? null;
         if (switchStatus == null)
         {
             var mainComponent = statusResponse["components"]?["main"];
             foreach (var property in mainComponent?.Children<JProperty>())
             {
-                return property.Value["value"]?.ToString() ?? "Unknown";
+                return property.Value["value"]?.ToString() ?? "???";
             }
         }
         return switchStatus ?? "Unknown";
