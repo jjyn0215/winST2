@@ -115,6 +115,7 @@
                                         Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                         Text="{Binding Property}"
                                         MaxWidth="150"
+                                        MaxHeight="20"
                                         HorizontalAlignment="Left"
                                         TextWrapping="WrapWithOverflow">
                                     </ui:TextBlock>

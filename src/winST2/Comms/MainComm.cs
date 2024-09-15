@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -80,24 +81,24 @@ internal partial class GetDevicesFromCloud : ObservableObject
             var devicesInRoom = devices["items"].Where(d => d["roomId"]?.ToString() == room["roomId"]?.ToString());
             foreach (var device in devicesInRoom)
             {
+                {
+                    await Application.Current.Dispatcher.InvokeAsync(async () =>
                     {
-                        await Application.Current.Dispatcher.InvokeAsync(async () =>
+                        string status = await GetStatusAsync(device["deviceId"]?.ToString());
+                        dashboardViewModel.Devices.Add(new Device
                         {
-                            string status = await GetStatusAsync(device["deviceId"]?.ToString());
-                            dashboardViewModel.Devices.Add(new Device
-                            {
-                                Name = device["label"]?.ToString() ?? "Unnamed",
-                                RoomName = room["name"]?.ToString(),
-                                LocationName = location["name"]?.ToString(),
-                                Type = WhatIsYourDevice.IconSelector(device["name"].ToString()),
-                                Property = status ?? "Unknown",
-                                Status = status == "on" ? "True" : "False",
-                                IsOnline = await GetOnlineStatusAsync(device["deviceId"]?.ToString()) == "ONLINE" ? "True" : "False",
-                                IsSwitchCapable = status == "on" || status == "off" ? "Visible" : "Hidden",
-                                Key = device["deviceId"]?.ToString(),
-                            });
+                            Name = device["label"]?.ToString() ?? "Unnamed",
+                            RoomName = room["name"]?.ToString(),
+                            LocationName = location["name"]?.ToString(),
+                            Type = WhatIsYourDevice.IconSelector(device["name"].ToString()),
+                            Property = status.Split('!')[1] ?? "Unknown",
+                            Status = status.Split('!')[0] == "on" ? "True" : "False",
+                            IsOnline = await GetOnlineStatusAsync(device["deviceId"]?.ToString()) == "ONLINE" ? "True" : "False",
+                            IsSwitchCapable = status.Split('!')[0] == "on" || status.Split('!')[0] == "off" ? "Visible" : "Hidden",
+                            Key = device["deviceId"]?.ToString(),
                         });
-                    }
+                    });
+                }
                 //await CreateDevices(device, room);
             }
         }
@@ -109,8 +110,8 @@ internal partial class GetDevicesFromCloud : ObservableObject
         foreach (var device in dashboardViewModel.Devices)
         {
             var updateStatus = await GetStatusAsync(device.Key);
-            device.Status = updateStatus == "on" ? "True" : "False";
-           device.Property = updateStatus ?? "Unknown";
+            device.Status = updateStatus.Split('!')[0] == "on" ? "True" : "False";
+            device.Property = updateStatus.Split('!')[1] ?? "Unknown";
         }
     }
 
@@ -133,23 +134,15 @@ internal partial class GetDevicesFromCloud : ObservableObject
     {
         var statusResponse = await FetchDataAsync($"/devices/{deviceId}/status");
         var switchStatus = statusResponse["components"]?["main"]?["switch"]?["switch"]?["value"]?.ToString() ?? null;
-        if (switchStatus == null)
+        var propertyString = string.Empty;
+        foreach (var property in statusResponse["components"]?["main"]?.Children<JProperty>())
         {
-            var mainComponent = statusResponse["components"]?["main"];
-            if (mainComponent != null)
+            foreach (var value in property.Value)
             {
-                var propertyString = string.Empty;
-                foreach (var property in mainComponent.Children<JProperty>())
-                {
-                    foreach (var value in property.Value)
-                    {
-                        propertyString += value?.First?["value"]?.ToString() + value?.First?["unit"]?.ToString() + " ";
-                    }
-                }
-                return propertyString.TrimStart();
+                propertyString += value?.First?["value"]?.ToString() + value?.First?["unit"]?.ToString() + " ";
             }
         }
-        return switchStatus ?? "Unknown";
+        return switchStatus + "!" + propertyString.TrimStart() ?? "Unknown";
     }
 
     internal static async Task<string> GetOnlineStatusAsync(string deviceId)

@@ -31,7 +31,7 @@
             <RowDefinition
                 Height="*" />
         </Grid.RowDefinitions>
-        
+
         <ui:NavigationView
             x:Name="RootNavigation"
             Grid.Row="1"
@@ -39,11 +39,9 @@
             OpenPaneLength="200"
             BreadcrumbBar="{Binding ElementName=Whatisthis}"
             FooterMenuItemsSource="{Binding ViewModel.NavigationFooter, Mode=OneWay}"
-
             MenuItemsSource="{Binding ViewModel.NavigationItems, Mode=OneWay}"
             Transition="FadeInWithSlide"
             PaneDisplayMode="Left">
-
             <ui:NavigationView.Header>
                 <ui:BreadcrumbBar
                         x:Name="Whatisthis"
