@@ -17,10 +17,10 @@ Here's my previous winST : https://github.com/jjyn0215/winST.git
 > If you don't have ST Token, you can get [HERE](https://account.smartthings.com/tokens)
 
 ## Todo
-Shortcut
+Shortcut | X
 
-Device Icon
+Device Icon | V
 
-Device Property (sensor, others...)
+Device Property (sensor, others...) | V
 
-Tray UI
+Tray UI | X
