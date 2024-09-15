@@ -1,4 +1,6 @@
 ﻿
+using Wpf.Ui.Controls;
+
 namespace Wpf.Ui.Demo.Mvvm.Models;
 
 public partial class Device : ObservableObject
@@ -9,6 +11,8 @@ public partial class Device : ObservableObject
 
     public string LocationName { get; set; }
 
+    public SymbolIcon Type { get; set; }
+
     [ObservableProperty]
     public string _status;
 
@@ -16,7 +20,8 @@ public partial class Device : ObservableObject
 
     public string IsSwitchCapable { get; set; }
 
-    public string Type { get; set; }
+    [ObservableProperty]
+    public string _property;
 
     public string Key { get; set; }
 }

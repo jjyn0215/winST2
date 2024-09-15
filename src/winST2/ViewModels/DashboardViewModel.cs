@@ -23,8 +23,6 @@ public partial class DashboardViewModel(IDeviceUpdateService deviceUpdateService
     [ObservableProperty]
     private ObservableCollection<Device> _devices = [];
 
-    [ObservableProperty]
-    private string _status;
 
     public override void OnNavigatedTo()
     {
@@ -42,7 +40,7 @@ public partial class DashboardViewModel(IDeviceUpdateService deviceUpdateService
     [RelayCommand]
     private static async Task OnDeviceChanged(Device sender)
     {
-        GetDevicesFromCloud.OpenSnackBar(sender.Status,sender.Name, ControlAppearance.Info);
+        GetDevicesFromCloud.OpenSnackBar(sender.Status,sender.Name, ControlAppearance.Info, new SymbolIcon(SymbolRegular.Info24), 3);
         //await GetDevicesFromCloud.SendCommandAsync(sender.Key, sender.Status == "True" ? "on" : "off");
         sender.Status = await GetDevicesFromCloud.SendCommandAsync(sender.Key, sender.Status == "True" ? "on" : "off") == false ? sender.Status == "True" ? "False" : "True" : sender.Status;
         //GetDevicesFromCloud.OpenSnackBar(await GetDevicesFromCloud.SendCommandAsync(sender.Key, sender.Status == "True" ? "on" : "off") == false ? sender.Status == "True" ? "False" : "True" : null, "?", ControlAppearance.Info);

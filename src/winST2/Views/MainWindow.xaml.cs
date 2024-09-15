@@ -5,6 +5,7 @@
 
 using Wpf.Ui.Abstractions;
 using Wpf.Ui.Controls;
+using Wpf.Ui.Demo.Mvvm.ViewModels;
 using Wpf.Ui.Tray.Controls;
 
 namespace Wpf.Ui.Demo.Mvvm.Views;
@@ -43,7 +44,6 @@ public partial class MainWindow : INavigationWindow
     public void ShowWindow() => Show();
 
     public void CloseWindow() => Close();
-
 
     /// <summary>
     /// Raises the closed event.
@@ -90,7 +90,7 @@ public partial class MainWindow : INavigationWindow
     private void MenuItem_Click_Open(object sender, RoutedEventArgs e)
     {
         ShowWindow();
-        WindowState = WindowState.Normal;
+        WindowState = WindowState.Maximized;
     }
 
     private void MenuItem_Click_Exit(object sender, RoutedEventArgs e)

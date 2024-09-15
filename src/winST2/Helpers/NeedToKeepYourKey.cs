@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.IO;
+using Wpf.Ui.Controls;
 using Wpf.Ui.Demo.Mvvm.Comms;
 
 namespace Wpf.Ui.Demo.Mvvm.Helpers;
@@ -20,7 +21,7 @@ internal class NeedToKeepYourKey
         }
         catch (Exception ex)
         {
-            GetDevicesFromCloud.OpenSnackBar("SHIT!!!!!!!!", ex.Message, Controls.ControlAppearance.Danger);
+            GetDevicesFromCloud.OpenSnackBar("SHIT!!!!!!!!", ex.Message, Controls.ControlAppearance.Danger, new SymbolIcon(SymbolRegular.Warning24), 5);
             return null;
         }
     }
@@ -37,7 +38,7 @@ internal class NeedToKeepYourKey
         }
         catch (Exception ex)
         {
-            GetDevicesFromCloud.OpenSnackBar("SHIT!!!!!!!!", ex.Message, Controls.ControlAppearance.Danger);
+            GetDevicesFromCloud.OpenSnackBar("SHIT!!!!!!!!", ex.Message, Controls.ControlAppearance.Danger, new SymbolIcon(SymbolRegular.Warning24), 5);
         }
     }
 
@@ -56,7 +57,7 @@ internal class NeedToKeepYourKey
             }
             catch (Exception ex)
             {
-                GetDevicesFromCloud.OpenSnackBar("SHIT!!!!!!!!", ex.Message, Controls.ControlAppearance.Danger);
+                GetDevicesFromCloud.OpenSnackBar("SHIT!!!!!!!!", ex.Message, Controls.ControlAppearance.Danger, new SymbolIcon(SymbolRegular.Warning24), 5);
             }
         }
     }

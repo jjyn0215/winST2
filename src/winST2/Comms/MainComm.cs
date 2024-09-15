@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using Wpf.Ui.Controls;
+using Wpf.Ui.Demo.Mvvm.Helpers;
 using Wpf.Ui.Demo.Mvvm.Models;
 using Wpf.Ui.Demo.Mvvm.ViewModels;
 
@@ -20,7 +21,7 @@ internal partial class GetDevicesFromCloud : ObservableObject
         BaseAddress = new Uri("https://api.smartthings.com/v1"),
     };
 
-    internal static void OpenSnackBar(string title, string message, ControlAppearance controlAppearance)
+    internal static void OpenSnackBar(string title, string message, ControlAppearance controlAppearance, SymbolIcon symbolIcon, int time)
     {
         var snackbarService = (ISnackbarService)App.Services.GetService(typeof(ISnackbarService));
 
@@ -28,8 +29,8 @@ internal partial class GetDevicesFromCloud : ObservableObject
             title,
             message,
             controlAppearance,
-            new SymbolIcon(SymbolRegular.ErrorCircle24),
-            TimeSpan.FromSeconds(3)
+            symbolIcon,
+            TimeSpan.FromSeconds(time)
         );
     }
 
@@ -37,7 +38,7 @@ internal partial class GetDevicesFromCloud : ObservableObject
     {
         try 
         {
-            OpenSnackBar("Now loading...", "If this take too long, check your internet connection.", ControlAppearance.Info);
+            OpenSnackBar("Now loading...", "If this take too long, check your internet connection.", ControlAppearance.Info, new SymbolIcon(SymbolRegular.Info24), 30);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", settingsViewModel.ApiToken);
             dashboardViewModel.Devices.Clear();
             var locations = await FetchDataAsync("/locations");
@@ -54,12 +55,12 @@ internal partial class GetDevicesFromCloud : ObservableObject
 
                 await CreateDevices(rooms, devices, location);
             }
-            OpenSnackBar("Loaded Successfully.", "Devices are ready!", ControlAppearance.Success);
+            OpenSnackBar("Loaded Successfully.", "Devices are ready!", ControlAppearance.Success, new SymbolIcon(SymbolRegular.CheckmarkCircle24), 3);
             return true;
         }
         catch (Exception ex)
         {
-            OpenSnackBar("Something went wrong.", ex.Message, ControlAppearance.Danger);
+            OpenSnackBar("Something went wrong.", ex.Message, ControlAppearance.Danger, new SymbolIcon(SymbolRegular.Warning24), 5);
             return false;
         }
     }
@@ -88,10 +89,11 @@ internal partial class GetDevicesFromCloud : ObservableObject
                                 Name = device["label"]?.ToString() ?? "Unnamed",
                                 RoomName = room["name"]?.ToString(),
                                 LocationName = location["name"]?.ToString(),
-                                Type = status ?? "Unknown",
+                                Type = WhatIsYourDevice.IconSelector(device["name"].ToString()),
+                                Property = status ?? "Unknown",
                                 Status = status == "on" ? "True" : "False",
                                 IsOnline = await GetOnlineStatusAsync(device["deviceId"]?.ToString()) == "ONLINE" ? "True" : "False",
-                                IsSwitchCapable = status == "on" || status == "off" ? "Visible" : "Collapsed",
+                                IsSwitchCapable = status == "on" || status == "off" ? "Visible" : "Hidden",
                                 Key = device["deviceId"]?.ToString(),
                             });
                         });
@@ -106,7 +108,9 @@ internal partial class GetDevicesFromCloud : ObservableObject
     {
         foreach (var device in dashboardViewModel.Devices)
         {
-            device.Status = await GetStatusAsync(device.Key) == "on" ? "True" : "False";
+            var updateStatus = await GetStatusAsync(device.Key);
+            device.Status = updateStatus == "on" ? "True" : "False";
+           device.Property = updateStatus ?? "Unknown";
         }
     }
 
@@ -119,7 +123,7 @@ internal partial class GetDevicesFromCloud : ObservableObject
         }
         catch (Exception ex)
         {
-            OpenSnackBar("Something went wrong.", ex.Message, ControlAppearance.Danger);
+            OpenSnackBar("Something went wrong.", ex.Message, ControlAppearance.Danger, new SymbolIcon(SymbolRegular.Warning24), 5);
             return new JObject();
         }
     }
@@ -132,9 +136,17 @@ internal partial class GetDevicesFromCloud : ObservableObject
         if (switchStatus == null)
         {
             var mainComponent = statusResponse["components"]?["main"];
-            foreach (var property in mainComponent?.Children<JProperty>())
+            if (mainComponent != null)
             {
-                return property.Value["value"]?.ToString() ?? "???";
+                var propertyString = string.Empty;
+                foreach (var property in mainComponent.Children<JProperty>())
+                {
+                    foreach (var value in property.Value)
+                    {
+                        propertyString += value?.First?["value"]?.ToString() + value?.First?["unit"]?.ToString() + " ";
+                    }
+                }
+                return propertyString;
             }
         }
         return switchStatus ?? "Unknown";
@@ -173,7 +185,7 @@ internal partial class GetDevicesFromCloud : ObservableObject
         }
         catch (Exception ex)
         {
-            OpenSnackBar("Something went wrong.", ex.Message, ControlAppearance.Danger);
+            OpenSnackBar("Something went wrong.", ex.Message, ControlAppearance.Danger, new SymbolIcon(SymbolRegular.Warning24), 5);
             return false;
         }
     }
