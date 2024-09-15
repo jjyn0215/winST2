@@ -1,5 +1,6 @@
-# winST2
+# winST2 - SmartThings PC APP
 A simple windows application for SmartThings
+
 
 ## Why did you make this?
 Official SmartThings Desktop has some lack of functions
