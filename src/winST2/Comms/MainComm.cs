@@ -146,7 +146,7 @@ internal partial class GetDevicesFromCloud : ObservableObject
                         propertyString += value?.First?["value"]?.ToString() + value?.First?["unit"]?.ToString() + " ";
                     }
                 }
-                return propertyString;
+                return propertyString.TrimStart();
             }
         }
         return switchStatus ?? "Unknown";

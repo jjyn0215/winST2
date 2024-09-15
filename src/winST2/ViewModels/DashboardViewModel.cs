@@ -30,6 +30,10 @@ public partial class DashboardViewModel(IDeviceUpdateService deviceUpdateService
         {
             InitializeViewModel();
         }
+        else
+        {
+            deviceUpdateService.StartUpdating();
+        }
     }
 
     public override void OnNavigatedFrom()
@@ -47,9 +51,9 @@ public partial class DashboardViewModel(IDeviceUpdateService deviceUpdateService
     }
 
     [RelayCommand]
-    private static async Task OnSyncPressed(object sender)
+    private void OnSyncPressed(object sender)
     {
-        await GetDevicesFromCloud.RequestData();
+        InitializeViewModel();
     }
 
     public async void InitializeViewModel()
@@ -64,8 +68,5 @@ public partial class DashboardViewModel(IDeviceUpdateService deviceUpdateService
             IsInitialized = false;
             deviceUpdateService.StopUpdating();
         }
-        
     }
-
-
 }
