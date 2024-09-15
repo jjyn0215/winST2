@@ -6,7 +6,7 @@ Offical SmartThings Desktop is great, but it doesn't have functions that I want
 
 Such as : Shortcut key, Quick access, low ram usage, etc
 
-So I decided to make my own application, using WPF-UI.
+So I decided to make my own application, using [WPF UI](https://github.com/lepoco/wpfui).
 
 ## Functions
 - Basic device on/off
