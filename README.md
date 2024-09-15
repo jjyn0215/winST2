@@ -1,13 +1,12 @@
 # winST2 - SmartThings PC APP
 A simple windows application for SmartThings
 
-
 ## Why did you make this?
-Official SmartThings Desktop has some lack of functions
+Offical SmartThings Desktop is great, but it doesn't have functions that I want
 
-(and wHy does it take so long while loading interface? )
+Such as : Shortcut key, Quick access, low ram usage, etc
 
-Here's my previous winST : https://github.com/jjyn0215/winST.git
+So I decided to make my own application, using [WPF UI](https://github.com/lepoco/wpfui).
 
 ## Functions
 - Basic device on/off
