@@ -28,7 +28,7 @@ public partial class DashboardViewModel(IDeviceUpdateService deviceUpdateService
     {
         if (!IsInitialized)
         {
-            InitializeViewModel();
+            _ = InitializeViewModel();
         }
         else
         {
@@ -51,12 +51,12 @@ public partial class DashboardViewModel(IDeviceUpdateService deviceUpdateService
     }
 
     [RelayCommand]
-    private void OnSyncPressed(object sender)
+    private async Task OnSyncPressed(object sender)
     {
-        InitializeViewModel();
+        await InitializeViewModel();
     }
 
-    public async void InitializeViewModel()
+    public async Task InitializeViewModel()
     {
         if (await GetDevicesFromCloud.RequestData() == true)
         {

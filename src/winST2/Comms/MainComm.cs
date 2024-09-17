@@ -48,7 +48,6 @@ internal partial class GetDevicesFromCloud : ObservableObject
                 return false;
             }
             var devices = await FetchDataAsync($"/devices");
-
             foreach (var location in locations["items"])
             {
                 string locationId = location["locationId"].ToString();
