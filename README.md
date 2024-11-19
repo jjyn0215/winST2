@@ -10,7 +10,7 @@ So I decided to make my own application, using [WPF UI](https://github.com/lepoc
 
 ## Functions
 - Basic device on/off
-- Polling rate is 5 sec
+- Only uses REST API -> Polling rate is 5 sec
 - Works on background
 - Shortcut control ( Sooon )
   
